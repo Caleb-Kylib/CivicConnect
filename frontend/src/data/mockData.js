@@ -115,6 +115,58 @@ export const rights = [
             'Right to protest and demonstrate peacefully.'
         ],
         legalContext: 'Constitution of Kenya, Bill of Rights (Article 33).'
+    },
+    {
+        id: 'arrest-rights',
+        title: 'Rights of an Arrested Person',
+        topic: 'Criminal Justice',
+        explanation: 'Under Article 49, every person who is arrested has fundamental rights to ensure fair treatment by law enforcement.',
+        keyRights: [
+            'Right to be informed promptly of the reason for your arrest.',
+            'Right to remain silent; anything you say can be used against you.',
+            'Right to communicate with an advocate and your family.',
+            'Right to be brought before a court within 24 hours of arrest.'
+        ],
+        legalContext: 'Constitution of Kenya, Bill of Rights (Article 49).'
+    },
+    {
+        id: 'privacy-rights',
+        title: 'Right to Privacy',
+        topic: 'Personal Data',
+        explanation: 'Article 31 protects your personal space, home, and digital communications from arbitrary search or seizure.',
+        keyRights: [
+            'Protection against unauthorized search of your person or home.',
+            'Privacy of your communications (calls, emails, and texts).',
+            'Right to know how your personal data is being used by companies.',
+            'Protection from disclosure of private family or health information.'
+        ],
+        legalContext: 'Data Protection Act & Constitution (Article 31).'
+    },
+    {
+        id: 'matrimonial-property',
+        title: 'Matrimonial Property Rights',
+        topic: 'Marriage',
+        explanation: 'Governs the ownership of property acquired during marriage. Ensures that both spouses have an interest in property even if only one name is on the title.',
+        keyRights: [
+            'Spouses have an interest in matrimonial property according to their contribution.',
+            'Contribution can be monetary or non-monetary (child care, domestic work).',
+            'One spouse cannot sell the matrimonial home without the other\'s consent.',
+            'Equal rights to property acquired during the union.'
+        ],
+        legalContext: 'Matrimonial Property Act (2013).'
+    },
+    {
+        id: 'protest-rights',
+        title: 'Right to Assemble and Protest',
+        topic: 'Assembly',
+        explanation: 'Article 37 guarantees every person the right, peaceably and unarmed, to assemble, to demonstrate, to picket, and to present petitions to public authorities.',
+        keyRights: [
+            'Right to hold peaceful demonstrations in public spaces.',
+            'Right to picket and strike (especially for workers).',
+            'Police are mandated to provide security for peaceful protesters.',
+            'Requirement to notify the police (not "ask for permission") before the event.'
+        ],
+        legalContext: 'Constitution of Kenya (Article 37) & Public Order Act.'
     }
 ];
 
