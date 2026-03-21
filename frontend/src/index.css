@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-main: #2563eb;
+    --accent-main: #16a34a;
+    --bg-main: #fcfdff;
+    --card-bg: #ffffff;
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-main);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-all duration-300 shadow-md hover:shadow-lg focus:ring-4 focus:ring-primary-200 active:scale-95 flex items-center justify-center;
+  }
+
+  .btn-outline {
+    @apply px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-xl hover:border-primary-500 hover:text-primary-600 transition-all duration-300 shadow-sm hover:shadow-md focus:ring-4 focus:ring-slate-100 active:scale-95 flex items-center justify-center;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-premium rounded-2xl p-6 transition-all duration-300 hover:shadow-premium-hover;
+  }
+
+  .badge-upcoming {
+    @apply px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full border border-amber-200;
+  }
+
+  .badge-active {
+    @apply px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200;
+  }
+
+  .badge-passed {
+    @apply px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full border border-indigo-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
