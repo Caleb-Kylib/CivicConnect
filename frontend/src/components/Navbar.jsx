@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Landmark, Search, BookText, PenBox, GraduationCap } from 'lucide-react';
+import { Menu, X, Landmark, Search, BookText, PenBox, GraduationCap, Users2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -9,6 +9,7 @@ const navLinks = [
     { name: 'Your Rights', path: '/rights', icon: BookText },
     { name: 'Participate', path: '/participate', icon: PenBox },
     { name: 'Learn', path: '/learn', icon: GraduationCap },
+    { name: 'Find Leaders', path: '/find-leaders', icon: Users2 },
 ];
 
 export default function Navbar() {

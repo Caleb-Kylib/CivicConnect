@@ -251,3 +251,105 @@ export const educationTopics = [
         ]
     }
 ];
+
+export const counties = [
+    { id: '001', name: 'Mombasa' }, { id: '002', name: 'Kwale' }, { id: '003', name: 'Kilifi' },
+    { id: '004', name: 'Tana River' }, { id: '005', name: 'Lamu' }, { id: '006', name: 'Taita-Taveta' },
+    { id: '007', name: 'Garissa' }, { id: '008', name: 'Wajir' }, { id: '009', name: 'Mandera' },
+    { id: '010', name: 'Marsabit' }, { id: '011', name: 'Isiolo' }, { id: '012', name: 'Meru' },
+    { id: '013', name: 'Tharaka-Nithi' }, { id: '014', name: 'Embu' }, { id: '015', name: 'Kitui' },
+    { id: '016', name: 'Machakos' }, { id: '017', name: 'Makueni' }, { id: '018', name: 'Nyandarua' },
+    { id: '019', name: 'Nyeri' }, { id: '020', name: 'Kirinyaga' }, { id: '021', name: 'Murang\'a' },
+    { id: '022', name: 'Kiambu' }, { id: '023', name: 'Turkana' }, { id: '024', name: 'West Pokot' },
+    { id: '025', name: 'Samburu' }, { id: '026', name: 'Trans-Nzoia' }, { id: '027', name: 'Uasin Gishu' },
+    { id: '028', name: 'Elgeyo-Marakwet' }, { id: '029', name: 'Nandi' }, { id: '030', name: 'Baringo' },
+    { id: '031', name: 'Laikipia' }, { id: '032', name: 'Nakuru' }, { id: '033', name: 'Narok' },
+    { id: '034', name: 'Kajiado' }, { id: '035', name: 'Kericho' }, { id: '036', name: 'Bomet' },
+    { id: '037', name: 'Kakamega' }, { id: '038', name: 'Vihiga' }, { id: '039', name: 'Bungoma' },
+    { id: '040', name: 'Busia' }, { id: '041', name: 'Siaya' }, { id: '042', name: 'Kisumu' },
+    { id: '043', name: 'Homa Bay' }, { id: '044', name: 'Migori' }, { id: '045', name: 'Kisii' },
+    { id: '046', name: 'Nyamira' }, { id: '047', name: 'Nairobi' }
+];
+
+export const leaders = [
+    {
+        id: 'l1',
+        name: 'Johnson Sakaja',
+        title: 'Governor',
+        countyId: '047',
+        constituency: 'County-wide',
+        party: 'UDA',
+        image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@SakajaJohnson',
+            email: 'governor@nairobi.go.ke',
+            phone: '020-1234567'
+        }
+    },
+    {
+        id: 'l2',
+        name: 'Edwin Sifuna',
+        title: 'Senator',
+        countyId: '047',
+        constituency: 'County-wide',
+        party: 'ODM',
+        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@edwinsifuna',
+            email: 'senator@nairobi.go.ke',
+            phone: '020-7654321'
+        }
+    },
+    {
+        id: 'l3',
+        name: 'Esther Passaris',
+        title: 'Woman Rep',
+        countyId: '047',
+        constituency: 'County-wide',
+        party: 'ODM',
+        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@EstherPassaris',
+            email: 'womanrep@nairobi.go.ke'
+        }
+    },
+    {
+        id: 'l4',
+        name: 'Tim Wanyonyi',
+        title: 'MP',
+        countyId: '047',
+        constituency: 'Westlands',
+        party: 'ODM',
+        image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@TimWanyonyi',
+            email: 'westlandsmp@parliament.go.ke'
+        }
+    },
+    {
+        id: 'l5',
+        name: 'Robert Alai',
+        title: 'MCA',
+        countyId: '047',
+        constituency: 'Kileleshwa Ward',
+        party: 'ODM',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@RobertAlai'
+        }
+    },
+    {
+        id: 'l6',
+        name: 'Gladys Wanga',
+        title: 'Governor',
+        countyId: '043',
+        constituency: 'County-wide',
+        party: 'ODM',
+        image: 'https://images.unsplash.com/photo-1589156280159-27698a70f29e?auto=format&fit=crop&q=80&w=400',
+        contact: {
+            twitter: '@gladyswanga',
+            email: 'governor@homabay.go.ke'
+        }
+    }
+];
+
