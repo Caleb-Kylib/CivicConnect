@@ -1,5 +1,80 @@
 export const bills = [
     {
+        id: 'social-media-billing-2025',
+        title: 'Social Media Billing Meter Bill',
+        shortDescription: 'Proposed by Maryanne Keitany to measure and charge social media data consumption.',
+        fullExplanation: 'This controversial bill proposes to track how much data citizens use on social media platforms like TikTok and Facebook. The goal is to collect revenue and manage network congestion, but critics say it’s a tax on digital freedom.',
+        status: 'Active',
+        date: '2025-05-12',
+        category: 'Technology',
+        keyPoints: [
+            'Proposes installing "digital meters" to track social media usage.',
+            'Higher rates for commercial/business accounts.',
+            'Requires social media platforms to pay a "hosting fee" to the government.',
+            'Possible fines for bypassing the metering system.'
+        ],
+        pros: [
+            'Creates a new source of revenue for digital infrastructure.',
+            'Encourages more productive internet use.',
+            'Could lower the price of basic internet for non-social media sites.'
+        ],
+        concerns: [
+            'Major privacy concerns over "meters" tracking what you browse.',
+            'Increases the cost of living for digital creators and businesses.',
+            'Might be used to restrict freedom of expression online.'
+        ]
+    },
+    {
+        id: 'sovereign-wealth-fund-2026',
+        title: 'Kenya Sovereign Wealth Fund Bill',
+        shortDescription: 'Proposed by Kimani Ichungwah to save revenue from oil, gas, and minerals.',
+        fullExplanation: 'A bill focused on the future. It wants to take a portion of the money Kenya gets from exporting oil and gold and save it in a "national savings account" so it can be used for emergencies or future generations.',
+        status: 'Upcoming',
+        date: '2026-02-10',
+        category: 'Finance',
+        keyPoints: [
+            'Mandatory 5% saving from all natural resource exports.',
+            'Funds to be invested in low-risk international markets.',
+            'Clear rules on when the government can withdraw money (e.g., during droughts).',
+            'Independent board to manage the fund.'
+        ],
+        pros: [
+            'Ensures future generations benefit from today\'s natural resources.',
+            'Creates a buffer against economic shocks or disasters.',
+            'Reduces Kenya\'s dependence on foreign debt.'
+        ],
+        concerns: [
+            'The risk of corruption/mismanagement of such a large fund.',
+            'Immediate country needs vs. long-term savings.',
+            'Transparency of international investments.'
+        ]
+    },
+    {
+        id: 'nyamu-ai-bill-2026',
+        title: 'The Artificial Intelligence Bill (2026)',
+        shortDescription: 'Proposed by Karen Nyamu to regulate AI ethics and protect human jobs.',
+        fullExplanation: 'This bill is a follow-up to previous AI regulations, focusing more on ethical use. It wants to protect human artists and writers from AI "theft" and ensures that robots don’t take jobs that humans can still do.',
+        status: 'Upcoming',
+        date: '2026-04-15',
+        category: 'Technology',
+        keyPoints: [
+            'Deepfakes must be clearly labeled with a digital watermark.',
+            'AI training on local Kenyan art must pay royalties to the artists.',
+            'Prohibits complete automation in "sensitive" sectors like healthcare.',
+            'Estants an "AI Ethics Board" at the national level.'
+        ],
+        pros: [
+            'Protects Kenyan intellectual property from global tech giants.',
+            'Reduces the risk of misinformation through deepfake labels.',
+            'Starts a national conversation on the ethics of machine learning.'
+        ],
+        concerns: [
+            'Difficult to enforce against international AI companies.',
+            'Vague definitions of "human-only jobs."',
+            'Could make Kenyan AI startups less competitive globally.'
+        ]
+    },
+    {
         id: 'cybercrime-bill-2024',
         title: 'Computer Misuse and Cybercrimes (Amendment) Bill',
         shortDescription: 'Seeking to introduce new offenses related to online harassment and misinformation.',
@@ -72,6 +147,131 @@ export const bills = [
             'High registration fees might kill small tech startups.',
             'The jail terms and fines are considered too harsh by the tech community.',
             'Might slow down innovation in Kenya\'s "Silicon Savannah".'
+        ]
+    },
+    {
+        id: 'land-law-amendment-2024',
+        title: 'The Land Laws (Amendment) Bill 2024',
+        shortDescription: 'Updates on how the government manages and acquires land.',
+        fullExplanation: 'This law simplifies how the government can reclaim land for public projects like roads or hospitals. It also moves land records to a digital system to reduce fraud and speed up land transactions.',
+        status: 'Passed',
+        date: '2024-03-10',
+        category: 'Land',
+        keyPoints: [
+            'All land titles to be moved into a national digital database.',
+            'Requires fair market-value compensation for all land taken by the State.',
+            'Stricter rules against land grabbing of public parks and spaces.',
+            'New process for regularizing land ownership in informal settlements.'
+        ],
+        pros: [
+            'Makes it harder to fake titles since records are digital.',
+            'Reduces long waiting times at land offices.',
+            'Better protection for public land from "grabbers".'
+        ],
+        concerns: [
+            'Privacy of personal land data in a digital system.',
+            'Risk of people being displaced for "public projects" with low compensation.',
+            'High costs for regularizing titles for poor citizens.'
+        ]
+    },
+    {
+        id: 'privatisation-bill-2025',
+        title: 'The Privatisation Bill 2025',
+        shortDescription: 'A plan to sell some state-owned companies to private investors.',
+        fullExplanation: 'The government wants to sell companies it owns (like certain hotels and sugar factories) so they can be run more efficiently by private investors. The goal is to save the government money and bring in new investment.',
+        status: 'Passed',
+        date: '2025-01-20',
+        category: 'Economy',
+        keyPoints: [
+            'Streamlines the process for the National Treasury to sell public assets.',
+            'Reduces the need for Parliamentary approval for every single sale.',
+            'Money from sales must go specifically into debt repayment or development.',
+            'Ensures public participation before a sale is finalized.'
+        ],
+        pros: [
+            'Stops loss-making government companies from wasting taxpayer money.',
+            'Attracts fresh technology and jobs when private companies take over.',
+            'Reduces the national debt using sale proceeds.'
+        ],
+        concerns: [
+            'Strategic national assets might be sold cheaply to powerful individuals.',
+            'Risk of mass layoffs when private owners try to "cut costs".',
+            'Sovereignty concerns regarding who buys important public utilities.'
+        ]
+    },
+    {
+        id: 'wildlife-conservation-2023',
+        title: 'Wildlife Conservation and Management Bill 2023',
+        shortDescription: 'Better rules for protecting animals and compensating farmers.',
+        fullExplanation: 'This bill focused on the "human-wildlife conflict." It increases the money paid to farmers when wild animals destroy crops or kill livestock, while also making the punishment for poaching much harsher.',
+        status: 'Passed',
+        date: '2023-11-15',
+        category: 'Environment',
+        keyPoints: [
+            'Higher compensation (up to 5,000,000 KES) for death caused by wildlife attacks.',
+            'Life imprisonment for poaching endangered animals (like rhinos and elephants).',
+            'Communities can now manage their own wildlife conservancies and earn from them.',
+            'Mandatory fencing of national parks that are near human settlements.'
+        ],
+        pros: [
+            'Farmers get better financial support after wildlife attacks.',
+            'Stops animal numbers from dropping through harsher poaching laws.',
+            'Gives local communities a reason to protect animals because they earn from them.'
+        ],
+        concerns: [
+            'Compensation process is still very slow and full of paperwork.',
+            'Fences might cut off natural animal migration routes.',
+            'Lack of enough rangers to enforce the new "no-entry" zones.'
+        ]
+    },
+    {
+        id: 'police-service-amendment-2024',
+        title: 'National Police Service Commission Amendment Bill 2024',
+        shortDescription: 'Changes to how the police are promoted and managed.',
+        fullExplanation: 'This law changes how the police hierarchy works. It aims to make promotions fairer, improve officer welfare (like housing and medical care), and ensures the police are held accountable for their actions.',
+        status: 'Passed',
+        date: '2024-02-05',
+        category: 'Security',
+        keyPoints: [
+            'Promotions will now be strictly based on merit and years of service.',
+            'Requires the commission to provide better housing for all lower-ranking officers.',
+            'New committee to handle complaints from citizens against officers.',
+            'Streamlines the chain of command to reduce confusion during operations.'
+        ],
+        pros: [
+            'Boosts officer morale through fairer promotion systems.',
+            'Clearer rules for disciplining rogue officers.',
+            'Better living conditions for the men and women protecting us.'
+        ],
+        concerns: [
+            'The risk of the executive branch having too much control over the commission.',
+            'Budget constraints to build the promised new houses.',
+            'Might overcomplicate the command structure.'
+        ]
+    },
+    {
+        id: 'air-passenger-charge-2025',
+        title: 'Air Passenger Service Charge Amendment Bill 2025',
+        shortDescription: 'A small update to the fees paid by every airline passenger.',
+        fullExplanation: 'This is a simple update to the tax you pay when buying a plane ticket. The money collected is used to maintain and expand Kenyan airports (like JKIA and Moi International) to meet modern standards.',
+        status: 'Passed',
+        date: '2025-05-10',
+        category: 'Transport',
+        keyPoints: [
+            'Passenger service charge for international flights set at $50.',
+            'Domestic flight service charge rounded to 600 KES.',
+            'All air passenger revenue must be used exclusively for airport development.',
+            'Children under 2 years old are exempt from these charges.'
+        ],
+        pros: [
+            'Funding for much-needed airport renovations (better runways and terminals).',
+            'Helps Kenya stay as a leading aviation hub in East Africa.',
+            'Clear transparent use of the funds specifically for transport.'
+        ],
+        concerns: [
+            'Air travel becomes slightly more expensive for ordinary Kenyans.',
+            'Worries that the money might be diverted to other government budget holes.',
+            'Potential for high corruption in large airport tenders.'
         ]
     },
     {
