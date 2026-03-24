@@ -50,6 +50,31 @@ export const bills = [
         ]
     },
     {
+        id: 'kenya-ai-bill-2024',
+        title: 'Kenya Robotics and Artificial Intelligence Society Bill',
+        shortDescription: 'Proposed rules for everyone building or using AI and robots in Kenya.',
+        fullExplanation: 'This bill wants to create a special group (the Society) that will oversee all AI and robotics work in Kenya. If you build apps that use AI or make robots, you would need to register and follow new rules. The goal is to make sure AI is used safely and ethically in the country.',
+        status: 'Active',
+        date: '2024-03-15',
+        category: 'Technology',
+        keyPoints: [
+            'Every AI/Robotics company must register with a new National Society.',
+            'Requires a license for anyone to practice as an AI professional.',
+            'Proposes fines of up to 2,000,000 KES for working without a license.',
+            'Gives the government power to inspect AI systems for "safety".'
+        ],
+        pros: [
+            'Helps set ethical standards for AI use in Kenya.',
+            'Creates a formal professional body for tech workers.',
+            'Could help protect citizens from harmful or biased AI systems.'
+        ],
+        concerns: [
+            'High registration fees might kill small tech startups.',
+            'The jail terms and fines are considered too harsh by the tech community.',
+            'Might slow down innovation in Kenya\'s "Silicon Savannah".'
+        ]
+    },
+    {
         id: 'health-laws-amendment-2024',
         title: 'Health Laws (Amendment) Bill',
         shortDescription: 'Restructuring the management of national health insurance and facility funding.',
