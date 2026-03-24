@@ -25,7 +25,7 @@ export default function Home() {
                         <span className="text-primary-600 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Participate. Be Heard.</span>
                     </h1>
 
-                    <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                    <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto font-medium">
                         Democratizing legal information for every Kenyan. Track upcoming bills, understand your constitutional rights, and join the conversation that shapes our nation's future.
                     </p>
 
@@ -61,6 +61,69 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* About Us Section */}
+            <section className="container mx-auto px-4 md:px-6 relative">
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    <div className="relative order-2 lg:order-1">
+                        <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary-100 rounded-full blur-3xl opacity-60"></div>
+                        <div className="relative bg-white rounded-[3rem] p-4 shadow-premium border border-slate-100 transform -rotate-2 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
+                            <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-slate-100 relative">
+                                <img
+                                    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800"
+                                    alt="Collaborative Citizenship"
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary-900/60 to-transparent"></div>
+                                <div className="absolute bottom-8 left-8 right-8 text-white">
+                                    <div className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest w-fit mb-3">Our Core Vision</div>
+                                    <h4 className="text-2xl font-display font-bold leading-tight">Empowering 50 Million+ Voices</h4>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Decorative Badge */}
+                        <div className="absolute -bottom-6 -right-6 bg-accent-500 text-white p-8 rounded-[2rem] shadow-xl border-4 border-white animate-bounce-subtle">
+                            <Users size={32} />
+                            <div className="mt-2 font-bold leading-none">Unity in <br /> Purpose</div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-8 order-1 lg:order-2">
+                        <div className="space-y-4">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-bold tracking-widest uppercase">
+                                <Users size={14} />
+                                <span>About Us</span>
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 leading-tight">
+                                Bridging the Gap Between <span className="text-primary-600">Parliament & People</span>
+                            </h2>
+                        </div>
+
+                        <div className="space-y-6 text-lg text-slate-600 leading-relaxed font-medium">
+                            <p>
+                                CivicConnect was born out of a simple but powerful idea: that every Kenyan citizen deserves to understand the laws that govern them, without needing a law degree.
+                            </p>
+                            <p>
+                                We believe that transparency is the bedrock of democracy. Our platform acts as a digital bridge, translating complex legislative documents into actionable knowledge, and providing a direct channel for public participation in the legislative process.
+                            </p>
+                            <p className="border-l-4 border-primary-600 pl-6 italic text-slate-800">
+                                "Our mission is to foster a more inclusive, informed, and active citizenry through technology that serves the public interest."
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-8 pt-4">
+                            <div className="space-y-2">
+                                <h4 className="text-3xl font-display font-bold text-slate-900">100%</h4>
+                                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest leading-none">Transparent</p>
+                            </div>
+                            <div className="space-y-2">
+                                <h4 className="text-3xl font-display font-bold text-slate-900">Real-time</h4>
+                                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest leading-none">Data Sync</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Featured Bills */}
             <section className="container mx-auto px-4 md:px-6">
                 <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
@@ -72,7 +135,7 @@ export default function Home() {
                         <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 leading-tight">
                             Featured Legislative Bills
                         </h2>
-                        <p className="text-slate-600 max-w-2xl text-lg">
+                        <p className="text-slate-600 max-w-2xl text-lg font-medium">
                             Critical legislation currently under discussion in Parliament that will impact your daily life.
                         </p>
                     </div>
@@ -89,50 +152,78 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* How It Works */}
-            <section className="bg-slate-50 py-24 border-y border-slate-100">
+            {/* Step-by-Step Guide Section */}
+            <section className="bg-slate-950 py-32 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600/10 blur-[150px] rounded-full -mr-64 -mt-64"></div>
                 <div className="container mx-auto px-4 md:px-6">
-                    <div className="max-w-3xl mx-auto text-center mb-20 space-y-4">
-                        <h2 className="text-4xl font-display font-bold text-slate-900">How CivicConnect Works</h2>
-                        <p className="text-lg text-slate-600">Making the legislative process accessible and transparent for everyone.</p>
+                    <div className="max-w-3xl mx-auto text-center mb-24 space-y-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 text-primary-400 rounded-full border border-white/10 text-xs font-bold tracking-widest uppercase">
+                            <ArrowRight size={14} />
+                            <span>User Guide</span>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold text-white">How to use <span className="text-primary-400">CivicConnect</span></h2>
+                        <p className="text-xl text-slate-400 font-medium">Your 4-step roadmap to becoming an active citizen in less than 5 minutes.</p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
                         {/* Step 1 */}
-                        <div className="relative p-10 bg-white rounded-3xl shadow-premium group hover:shadow-premium-hover transition-all duration-300">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary-50 rounded-bl-[100px] -z-10 group-hover:bg-primary-100 transition-colors"></div>
-                            <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-primary-600 group-hover:text-white transition-all duration-300 transform group-hover:-rotate-3">
-                                <FileText size={32} strokeWidth={1.5} />
+                        <div className="group space-y-8 p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all duration-500">
+                            <div className="w-20 h-20 bg-primary-600 text-white rounded-[1.5rem] flex items-center justify-center text-3xl font-display font-bold shadow-xl shadow-primary-900/40 transform group-hover:-rotate-6 transition-transform">
+                                01
                             </div>
-                            <h3 className="text-2xl font-display font-bold text-slate-800 mb-4 transition-colors group-hover:text-primary-700">1. Learn & Discover</h3>
-                            <p className="text-slate-600 leading-relaxed font-medium">
-                                We translate complex legal jargon into simple, everyday language that anyone can understand.
-                            </p>
+                            <div className="space-y-4">
+                                <h3 className="text-2xl font-display font-bold text-white group-hover:text-primary-400 transition-colors">Find a Bill</h3>
+                                <p className="text-slate-400 leading-relaxed font-medium">
+                                    Head to the **Bills** section and search for laws that interest you—from Health to Finance.
+                                </p>
+                            </div>
                         </div>
 
                         {/* Step 2 */}
-                        <div className="relative p-10 bg-white rounded-3xl shadow-premium group hover:shadow-premium-hover transition-all duration-300">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[100px] -z-10 group-hover:bg-accent-100 transition-colors"></div>
-                            <div className="w-16 h-16 bg-accent-100 text-accent-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-accent-600 group-hover:text-white transition-all duration-300 transform group-hover:rotate-3">
-                                <Users size={32} strokeWidth={1.5} />
+                        <div className="group space-y-8 p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all duration-500">
+                            <div className="w-20 h-20 bg-indigo-600 text-white rounded-[1.5rem] flex items-center justify-center text-3xl font-display font-bold shadow-xl shadow-indigo-900/40 transform group-hover:rotate-6 transition-transform">
+                                02
                             </div>
-                            <h3 className="text-2xl font-display font-bold text-slate-800 mb-4 transition-colors group-hover:text-accent-700">2. Public Participation</h3>
-                            <p className="text-slate-600 leading-relaxed font-medium">
-                                Submit your opinions on upcoming bills directly through our platform to making your voice heard.
-                            </p>
+                            <div className="space-y-4">
+                                <h3 className="text-2xl font-display font-bold text-white group-hover:text-indigo-400 transition-colors">Read Simply</h3>
+                                <p className="text-slate-400 leading-relaxed font-medium">
+                                    We break down the "legalese" into clear points, showing you exactly how the law impacts you.
+                                </p>
+                            </div>
                         </div>
 
                         {/* Step 3 */}
-                        <div className="relative p-10 bg-white rounded-3xl shadow-premium group hover:shadow-premium-hover transition-all duration-300">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-[100px] -z-10 group-hover:bg-indigo-100 transition-colors"></div>
-                            <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 transform group-hover:-rotate-3">
-                                <CheckCircle2 size={32} strokeWidth={1.5} />
+                        <div className="group space-y-8 p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all duration-500">
+                            <div className="w-20 h-20 bg-accent-600 text-white rounded-[1.5rem] flex items-center justify-center text-3xl font-display font-bold shadow-xl shadow-accent-900/40 transform group-hover:-rotate-6 transition-transform">
+                                03
                             </div>
-                            <h3 className="text-2xl font-display font-bold text-slate-800 mb-4 transition-colors group-hover:text-indigo-700">3. Stay Informed</h3>
-                            <p className="text-slate-600 leading-relaxed font-medium">
-                                Receive updates as bills progress through Parliament and learn about how these laws affect you.
-                            </p>
+                            <div className="space-y-4">
+                                <h3 className="text-2xl font-display font-bold text-white group-hover:text-accent-400 transition-colors">Speak Up</h3>
+                                <p className="text-slate-400 leading-relaxed font-medium">
+                                    Use the **Participate** forms to submit your views directly to the relevant Parliamentary committee.
+                                </p>
+                            </div>
                         </div>
+
+                        {/* Step 4 */}
+                        <div className="group space-y-8 p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all duration-500">
+                            <div className="w-20 h-20 bg-emerald-600 text-white rounded-[1.5rem] flex items-center justify-center text-3xl font-display font-bold shadow-xl shadow-emerald-900/40 transform group-hover:rotate-6 transition-transform">
+                                04
+                            </div>
+                            <div className="space-y-4">
+                                <h3 className="text-2xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors">Contact Leaders</h3>
+                                <p className="text-slate-400 leading-relaxed font-medium">
+                                    Use the **Leader Finder** to send messages or emails to your MP or Senator about the bill.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-20 text-center">
+                        <Link to="/bills" className="inline-flex items-center gap-3 px-10 py-5 bg-white text-slate-900 font-bold rounded-2xl hover:bg-primary-50 transition-all shadow-xl active:scale-95 group/guide">
+                            Start My First Search
+                            <ArrowRight size={20} className="group-hover/guide:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
                 </div>
             </section>

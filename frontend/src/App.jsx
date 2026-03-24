@@ -6,6 +6,7 @@ import BillDetails from './pages/BillDetails';
 import Rights from './pages/Rights';
 import Participate from './pages/Participate';
 import Learn from './pages/Learn';
+import FindLeaders from './pages/FindLeaders';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: 'learn',
                 element: <Learn />,
+            },
+            {
+                path: 'find-leaders',
+                element: <FindLeaders />,
             },
         ],
     },
