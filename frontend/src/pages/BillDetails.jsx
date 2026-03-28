@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { fetchBillById } from '../utils/api';
+import { fetchBillById, voteOnBill } from '../utils/api';
 import {
     ArrowLeft,
     Calendar,
@@ -14,7 +14,9 @@ import {
     Share2,
     Bookmark,
     Loader2,
-    Users2
+    Users2,
+    ThumbsUp,
+    ThumbsDown
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +33,25 @@ export default function BillDetails() {
     const [opinion, setOpinion] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [translationCache, setTranslationCache] = useState({});
+    const [voted, setVoted] = useState(false);
+
+    useEffect(() => {
+        // Check if user has already voted for this bill in this session
+        const hasVoted = localStorage.getItem(`voted_${id}`);
+        if (hasVoted) setVoted(true);
+    }, [id]);
+
+    const handleVote = async (voteType) => {
+        if (voted) return;
+        try {
+            const updatedBill = await voteOnBill(id, voteType);
+            setBill(updatedBill);
+            setVoted(true);
+            localStorage.setItem(`voted_${id}`, 'true');
+        } catch (err) {
+            console.error("Voting failed", err);
+        }
+    };
 
     useEffect(() => {
         const getBill = async () => {
@@ -275,6 +296,55 @@ export default function BillDetails() {
                                         </li>
                                     ))}
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Voting Section */}
+                    <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl space-y-8 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600/10 rounded-full -translate-y-32 translate-x-32 blur-3xl"></div>
+
+                        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                            <div className="space-y-2">
+                                <h3 className="text-3xl font-display font-bold">{t("whatIsYourStance")}</h3>
+                                <p className="text-slate-400 font-medium">Your vote helps represent the public's opinion to legislators.</p>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <button
+                                    onClick={() => handleVote('support')}
+                                    disabled={voted}
+                                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold transition-all ${voted ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 hover:scale-105 active:scale-95 shadow-lg shadow-emerald-900/40'}`}
+                                >
+                                    <ThumbsUp size={20} />
+                                    {t("support")}
+                                </button>
+                                <button
+                                    onClick={() => handleVote('oppose')}
+                                    disabled={voted}
+                                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold transition-all ${voted ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-rose-600 hover:bg-rose-500 hover:scale-105 active:scale-95 shadow-lg shadow-rose-900/40'}`}
+                                >
+                                    <ThumbsDown size={20} />
+                                    {t("oppose")}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Results Bar */}
+                        <div className="relative z-10 space-y-4 pt-4">
+                            <div className="flex justify-between text-sm font-bold uppercase tracking-widest">
+                                <span className="text-emerald-400">{displayBill.votesSupport || 0} {t("supportVotes")}</span>
+                                <span className="text-rose-400">{displayBill.votesOppose || 0} {t("opposeVotes")}</span>
+                            </div>
+                            <div className="h-4 bg-slate-800 rounded-full overflow-hidden flex">
+                                <div
+                                    className="h-full bg-emerald-500 transition-all duration-1000 ease-out"
+                                    style={{ width: `${((displayBill.votesSupport || 0) / ((displayBill.votesSupport || 0) + (displayBill.votesOppose || 0) || 1)) * 100}%` }}
+                                ></div>
+                                <div
+                                    className="h-full bg-rose-500 transition-all duration-1000 ease-out"
+                                    style={{ width: `${((displayBill.votesOppose || 0) / ((displayBill.votesSupport || 0) + (displayBill.votesOppose || 0) || 1)) * 100}%` }}
+                                ></div>
                             </div>
                         </div>
                     </div>

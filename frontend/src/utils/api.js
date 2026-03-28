@@ -20,3 +20,16 @@ export const fetchLeaders = async (countyId = '') => {
     if (!response.ok) throw new Error('Failed to fetch leaders');
     return response.json();
 };
+
+export const voteOnBill = async (id, voteType) => {
+    const response = await fetch(`${API_BASE_URL}/bills/${id}/vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ voteType }),
+    });
+
+    if (!response.ok) throw new Error('Failed to cast vote');
+    return response.json();
+};

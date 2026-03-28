@@ -41,7 +41,12 @@ const resources = {
             "statusUpcoming": "Upcoming",
             "statusActive": "Active",
             "statusPassed": "Passed",
-            "viewDetails": "View Details"
+            "viewDetails": "View Details",
+            "whatIsYourStance": "What is your stance?",
+            "support": "Support",
+            "oppose": "Oppose",
+            "supportVotes": "Support Votes",
+            "opposeVotes": "Oppose Votes"
         }
     },
     sw: {
@@ -83,7 +88,12 @@ const resources = {
             "statusUpcoming": "Inayokuja",
             "statusActive": "Inaendelea",
             "statusPassed": "Imepitishwa",
-            "viewDetails": "Ona Maelezo"
+            "viewDetails": "Ona Maelezo",
+            "whatIsYourStance": "Msimamo wako ni upi?",
+            "support": "Ungaji Mkono",
+            "oppose": "Pingamizi",
+            "supportVotes": "Kura za Kuunga",
+            "opposeVotes": "Kura za Kupinga"
         }
     }
 };

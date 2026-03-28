@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
+import KenyaMap from '../components/KenyaMap';
 
 const leaderTypes = ['All', 'Governor', 'Senator', 'Woman Rep', 'MP', 'MCA'];
 
@@ -128,10 +129,32 @@ export default function FindLeaders() {
                     </div>
                 </div>
 
-                {/* Results Section */}
-                <div className="max-w-6xl mx-auto space-y-10">
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                {/* Left: Interactive Map */}
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-white rounded-[2.5rem] p-6 shadow-premium border border-slate-100 sticky top-48">
+                        <h3 className="text-xl font-display font-bold text-slate-800 mb-6 flex items-center gap-2">
+                            <MapPin size={20} className="text-primary-600" />
+                            Interactive Map
+                        </h3>
+                        <KenyaMap
+                            selectedCountyId={selectedCounty}
+                            onSelectCounty={setSelectedCounty}
+                        />
+                        <div className="mt-6 p-4 bg-primary-50 rounded-2xl border border-primary-100">
+                            <p className="text-xs text-primary-700 font-medium leading-relaxed">
+                                Click on a county code (001-047) to instantly see the representatives for that region.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right: Results Section */}
+                <div className="lg:col-span-2 space-y-10">
                     <div className="flex items-center justify-between px-4">
-                        <h2 className="text-2xl font-display font-bold text-slate-800 flex items-center gap-3">
+                        <h2 className="text-2xl font-display font-bold text-slate-800 flex items-center gap-3 text-left">
                             Leaders in {currentCounty?.name} County
                             <span className="text-sm font-medium text-slate-400">({filteredLeaders.length} found)</span>
                         </h2>
@@ -162,7 +185,7 @@ export default function FindLeaders() {
                         ) : filteredLeaders.length > 0 ? (
                             <motion.div
                                 layout
-                                className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                                className="grid md:grid-cols-2 gap-8"
                             >
                                 {filteredLeaders.map((leader) => (
                                     <motion.div
@@ -175,54 +198,53 @@ export default function FindLeaders() {
                                     >
                                         <div className="flex items-start gap-6">
                                             <div className="relative shrink-0">
-                                                <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-lg border-4 border-white transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                                                    <img src={leader.image} alt={leader.name} className="w-full h-full object-cover" />
+                                                <div className="w-20 h-20 rounded-3xl overflow-hidden shadow-lg border-4 border-white transform rotate-2 group-hover:rotate-0 transition-transform duration-500 bg-slate-100 flex items-center justify-center">
+                                                    {leader.image ? (
+                                                        <img src={leader.image} alt={leader.name} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <User size={32} className="text-slate-300" />
+                                                    )}
                                                 </div>
-                                                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-600 text-white rounded-xl flex items-center justify-center border-2 border-white shadow-md">
-                                                    <CheckCircle2 size={14} />
+                                                <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-primary-600 text-white rounded-xl flex items-center justify-center border-2 border-white shadow-md">
+                                                    <CheckCircle2 size={12} />
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-1 pt-2">
+                                            <div className="space-y-1 pt-1">
                                                 <div className="px-2 py-0.5 bg-primary-50 text-primary-700 text-[10px] font-bold rounded-lg w-fit uppercase tracking-wider mb-1">
                                                     {leader.title}
                                                 </div>
-                                                <h3 className="text-xl font-display font-bold text-slate-900 leading-tight group-hover:text-primary-700 transition-colors">
+                                                <h3 className="text-lg font-display font-bold text-slate-900 leading-tight group-hover:text-primary-700 transition-colors">
                                                     {leader.name}
                                                 </h3>
-                                                <p className="text-sm text-slate-500 font-medium flex items-center gap-1.5">
-                                                    <MapPin size={12} className="text-slate-400" />
+                                                <p className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                                                    <MapPin size={10} className="text-slate-400" />
                                                     {leader.constituency}
                                                 </p>
                                                 <div className="pt-2">
-                                                    <span className="text-[10px] font-bold px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md">
-                                                        {leader.party} Party
+                                                    <span className="text-[9px] font-bold px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase">
+                                                        {leader.party}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
+                                        <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
                                             <div className="flex gap-2">
-                                                {leader.contact.twitter && (
-                                                    <a href={`https://twitter.com/${leader.contact.twitter}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center hover:bg-sky-50 hover:text-sky-500 transition-all">
-                                                        <Twitter size={18} />
+                                                {leader.contact?.twitter && (
+                                                    <a href={`https://twitter.com/${leader.contact.twitter}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center hover:bg-sky-50 hover:text-sky-500 transition-all">
+                                                        <Twitter size={16} />
                                                     </a>
                                                 )}
-                                                {leader.contact.email && (
-                                                    <a href={`mailto:${leader.contact.email}`} className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center hover:bg-rose-50 hover:text-rose-500 transition-all">
-                                                        <Mail size={18} />
-                                                    </a>
-                                                )}
-                                                {leader.contact.phone && (
-                                                    <a href={`tel:${leader.contact.phone}`} className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-500 transition-all">
-                                                        <Phone size={18} />
+                                                {leader.contact?.email && (
+                                                    <a href={`mailto:${leader.contact.email}`} className="w-9 h-9 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center hover:bg-rose-50 hover:text-rose-500 transition-all">
+                                                        <Mail size={16} />
                                                     </a>
                                                 )}
                                             </div>
 
-                                            <button className="px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-primary-600 active:scale-95 transition-all shadow-lg shadow-black/5">
-                                                View Activity
+                                            <button className="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold rounded-xl hover:bg-primary-600 active:scale-95 transition-all shadow-lg shadow-black/5">
+                                                Contact Info
                                             </button>
                                         </div>
                                     </motion.div>
@@ -251,50 +273,51 @@ export default function FindLeaders() {
                         )}
                     </AnimatePresence>
                 </div>
+            </div>
 
-                {/* Info Section */}
-                <section className="max-w-4xl mx-auto pt-12">
-                    <div className="bg-gradient-to-br from-primary-600 to-indigo-700 rounded-[3rem] p-10 md:p-14 text-white relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
-                        <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-                            <div className="space-y-6">
-                                <h2 className="text-3xl font-display font-bold leading-tight">Why contact your leaders?</h2>
-                                <p className="text-indigo-100 leading-relaxed font-medium">
-                                    Democracy works best when leaders hear from their constituents. Whether it's a concern about a new bill or a local issue in your ward, your voice matters.
-                                </p>
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
-                                            <CheckCircle2 size={14} />
-                                        </div>
-                                        <span className="text-sm font-semibold">Influence policy decisions</span>
+            {/* Info Section */}
+            <section className="max-w-4xl mx-auto pt-12">
+                <div className="bg-gradient-to-br from-primary-600 to-indigo-700 rounded-[3rem] p-10 md:p-14 text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
+                    <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-6">
+                            <h2 className="text-3xl font-display font-bold leading-tight">Why contact your leaders?</h2>
+                            <p className="text-indigo-100 leading-relaxed font-medium">
+                                Democracy works best when leaders hear from their constituents. Whether it's a concern about a new bill or a local issue in your ward, your voice matters.
+                            </p>
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
+                                        <CheckCircle2 size={14} />
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
-                                            <CheckCircle2 size={14} />
-                                        </div>
-                                        <span className="text-sm font-semibold">Demand accountability on funds</span>
+                                    <span className="text-sm font-semibold">Influence policy decisions</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
+                                        <CheckCircle2 size={14} />
                                     </div>
+                                    <span className="text-sm font-semibold">Demand accountability on funds</span>
                                 </div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] p-8 space-y-6 border border-white/20">
-                                <Building2 className="text-primary-300" size={40} />
-                                <h4 className="text-xl font-bold">Leader Roles</h4>
-                                <div className="space-y-4">
-                                    <div className="p-4 bg-white/5 rounded-2xl">
-                                        <p className="text-xs font-bold text-primary-300 uppercase tracking-widest mb-1">Governor</p>
-                                        <p className="text-xs text-indigo-100">Executive head of the county government.</p>
-                                    </div>
-                                    <div className="p-4 bg-white/5 rounded-2xl">
-                                        <p className="text-xs font-bold text-primary-300 uppercase tracking-widest mb-1">Senator</p>
-                                        <p className="text-xs text-indigo-100">Protects county interests at the national level.</p>
-                                    </div>
+                        </div>
+                        <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] p-8 space-y-6 border border-white/20">
+                            <Building2 className="text-primary-300" size={40} />
+                            <h4 className="text-xl font-bold">Leader Roles</h4>
+                            <div className="space-y-4">
+                                <div className="p-4 bg-white/5 rounded-2xl">
+                                    <p className="text-xs font-bold text-primary-300 uppercase tracking-widest mb-1">Governor</p>
+                                    <p className="text-xs text-indigo-100">Executive head of the county government.</p>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-2xl">
+                                    <p className="text-xs font-bold text-primary-300 uppercase tracking-widest mb-1">Senator</p>
+                                    <p className="text-xs text-indigo-100">Protects county interests at the national level.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
+        </div >
     );
 }
