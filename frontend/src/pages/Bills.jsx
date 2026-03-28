@@ -1,15 +1,32 @@
-import { useState, useMemo } from 'react';
-import { bills } from '../data/mockData';
+import { useState, useMemo, useEffect } from 'react';
+import { fetchBills } from '../utils/api';
 import BillCard from '../components/BillCard';
 import SearchBar from '../components/SearchBar';
-import { Landmark, Filter, ChevronDown, CheckCircle2, LayoutGrid, List } from 'lucide-react';
+import { Landmark, Filter, ChevronDown, CheckCircle2, LayoutGrid, List, Loader2 } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export default function Bills() {
+    const [bills, setBills] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
     const [categoryFilter, setCategoryFilter] = useState('All');
     const [viewMode, setViewMode] = useState('grid');
+
+    useEffect(() => {
+        const getBills = async () => {
+            try {
+                const data = await fetchBills();
+                setBills(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        getBills();
+    }, []);
 
     const categories = ['All', ...new Set(bills.map(b => b.category))];
     const statuses = ['All', 'Upcoming', 'Active', 'Passed'];
@@ -22,7 +39,29 @@ export default function Bills() {
             const matchesCategory = categoryFilter === 'All' || bill.category === categoryFilter;
             return matchesSearch && matchesStatus && matchesCategory;
         });
-    }, [searchTerm, statusFilter, categoryFilter]);
+    }, [bills, searchTerm, statusFilter, categoryFilter]);
+
+    if (loading) {
+        return (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+                <Loader2 className="animate-spin text-primary-600" size={48} />
+                <p className="text-slate-500 font-bold animate-pulse">Loading Parliamentary Bills...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container mx-auto px-4 py-24 text-center space-y-6">
+                <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto">
+                    <Landmark size={40} />
+                </div>
+                <h3 className="text-2xl font-display font-bold text-slate-900">Unable to load bills</h3>
+                <p className="text-slate-600 max-w-sm mx-auto font-medium">{error}. Please check if your backend server is running.</p>
+                <button onClick={() => window.location.reload()} className="btn-primary">Try Again</button>
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto px-4 md:px-6 space-y-16">

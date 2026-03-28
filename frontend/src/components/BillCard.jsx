@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Calendar, Tag, ArrowRight } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 export default function BillCard({ bill }) {
+    const { t } = useTranslation();
     const getStatusBadge = (status) => {
         switch (status.toLowerCase()) {
             case 'upcoming':
-                return <span className="badge-upcoming">Upcoming</span>;
+                return <span className="badge-upcoming">{t("statusUpcoming")}</span>;
             case 'active':
-                return <span className="badge-active">Active</span>;
+                return <span className="badge-active">{t("statusActive")}</span>;
             case 'passed':
-                return <span className="badge-passed">Passed</span>;
+                return <span className="badge-passed">{t("statusPassed")}</span>;
             default:
                 return null;
         }
@@ -45,7 +47,7 @@ export default function BillCard({ bill }) {
                 to={`/bills/${bill.id}`}
                 className="btn-outline flex items-center justify-between group/btn bg-slate-50 border-transparent hover:bg-primary-50 hover:text-primary-700 hover:border-primary-100"
             >
-                <span>View Details</span>
+                <span>{t("viewDetails")}</span>
                 <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-1" />
             </Link>
         </div>
