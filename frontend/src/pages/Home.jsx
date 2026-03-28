@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { Landmark, ArrowRight, BookText, PenBox, GraduationCap, CheckCircle2, ChevronRight, Globe, Users, FileText } from 'lucide-react';
 import { bills } from '../data/mockData';
 import BillCard from '../components/BillCard';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+    const { t } = useTranslation();
     const featuredBills = bills.slice(0, 3);
 
     return (
@@ -21,41 +23,45 @@ export default function Home() {
                     </div>
 
                     <h1 className="text-5xl md:text-7xl font-display font-bold text-slate-900 leading-[1.1] tracking-tight">
-                        Understand Laws. <br />
-                        <span className="text-primary-600 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Participate. Be Heard.</span>
+                        {t("welcome").split('. ').map((part, i, arr) => (
+                            <span key={i}>
+                                {part}{i < arr.length - 1 ? '. ' : ''}
+                                {i === 0 && <br />}
+                            </span>
+                        ))}
                     </h1>
 
                     <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto font-medium">
-                        Democratizing legal information for every Kenyan. Track upcoming bills, understand your constitutional rights, and join the conversation that shapes our nation's future.
+                        {t("heroSubtitle")}
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                         <Link to="/bills" className="btn-primary py-4 px-10 text-lg w-full sm:w-auto gap-2">
-                            Explore Bills
+                            {t("exploreBills")}
                             <ArrowRight size={20} className="stroke-[2.5px]" />
                         </Link>
                         <Link to="/rights" className="btn-outline py-4 px-10 text-lg w-full sm:w-auto gap-2 border-primary-100 text-primary-700 hover:bg-primary-50">
                             <BookText size={20} />
-                            Know Your Rights
+                            {t("knowRights")}
                         </Link>
                     </div>
 
                     <div className="pt-12 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 border-t border-slate-100 mt-8 opacity-70">
                         <div className="flex flex-col items-center gap-1 group transition-transform hover:scale-105">
                             <span className="text-3xl font-display font-bold text-slate-800">50+</span>
-                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Active Bills</span>
+                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{t("activeBills")}</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 group transition-transform hover:scale-105">
                             <span className="text-3xl font-display font-bold text-slate-800">10k+</span>
-                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Citizen Views</span>
+                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{t("citizenViews")}</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 group transition-transform hover:scale-105">
                             <span className="text-3xl font-display font-bold text-slate-800">100%</span>
-                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">Free Access</span>
+                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{t("freeAccess")}</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 group transition-transform hover:scale-105">
                             <span className="text-3xl font-display font-bold text-slate-800">2024</span>
-                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">E-Government</span>
+                            <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{t("eGovernment")}</span>
                         </div>
                     </div>
                 </div>
@@ -91,10 +97,10 @@ export default function Home() {
                         <div className="space-y-4">
                             <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-bold tracking-widest uppercase">
                                 <Users size={14} />
-                                <span>About Us</span>
+                                <span>{t("aboutUs")}</span>
                             </div>
                             <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 leading-tight">
-                                Bridging the Gap Between <span className="text-primary-600">Parliament & People</span>
+                                {t("bridgingGap")}
                             </h2>
                         </div>
 
@@ -133,14 +139,15 @@ export default function Home() {
                             <span>In Focus</span>
                         </div>
                         <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 leading-tight">
-                            Featured Legislative Bills
+                            {t("featuredBills")}
                         </h2>
                         <p className="text-slate-600 max-w-2xl text-lg font-medium">
+                            {/* Static description for now or add to i18n */}
                             Critical legislation currently under discussion in Parliament that will impact your daily life.
                         </p>
                     </div>
                     <Link to="/bills" className="group flex items-center gap-2 text-primary-600 font-bold hover:text-primary-700 transition-colors uppercase tracking-wider text-sm whitespace-nowrap mb-2">
-                        View All Bills
+                        {t("viewAllBills")}
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
@@ -161,7 +168,7 @@ export default function Home() {
                             <ArrowRight size={14} />
                             <span>User Guide</span>
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-display font-bold text-white">How to use <span className="text-primary-400">CivicConnect</span></h2>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold text-white">{t("howToUse").split('CivicConnect')[0]} <span className="text-primary-400">CivicConnect</span></h2>
                         <p className="text-xl text-slate-400 font-medium">Your 4-step roadmap to becoming an active citizen in less than 5 minutes.</p>
                     </div>
 
@@ -236,19 +243,18 @@ export default function Home() {
 
                     <div className="relative z-10 max-w-3xl mx-auto space-y-8">
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-white leading-tight">
-                            Ready to take part in <br />
-                            shaping Kenya's future?
+                            {t("readyToShape")}
                         </h2>
                         <p className="text-primary-100 text-xl font-medium leading-relaxed">
                             Join thousands of citizens who are already using CivicConnect to stay informed and exercise their democratic rights.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
                             <button className="px-10 py-5 bg-white text-primary-700 text-lg font-bold rounded-2xl hover:bg-primary-50 transition-all duration-300 shadow-xl active:scale-95 group/cta flex items-center gap-2">
-                                Join CivicConnect
+                                {t("joinCivicConnect")}
                                 <ChevronRight size={20} className="group-hover/cta:translate-x-1 transition-transform" />
                             </button>
                             <Link to="/learn" className="px-8 py-5 border border-white/30 text-white text-lg font-semibold rounded-2xl hover:bg-white/10 transition-all duration-300">
-                                Civic Education Guide
+                                {t("civicEducation")}
                             </Link>
                         </div>
                     </div>

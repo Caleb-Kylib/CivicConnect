@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Landmark, Search, BookText, PenBox, GraduationCap, Users2 } from 'lucide-react';
+import { Menu, X, Landmark, Search, BookText, PenBox, GraduationCap, Users2, Globe } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const navLinks = [
-    { name: 'Bills', path: '/bills', icon: Landmark },
-    { name: 'Your Rights', path: '/rights', icon: BookText },
-    { name: 'Participate', path: '/participate', icon: PenBox },
-    { name: 'Learn', path: '/learn', icon: GraduationCap },
-    { name: 'Find Leaders', path: '/find-leaders', icon: Users2 },
+    { name: 'bills', path: '/bills', icon: Landmark },
+    { name: 'knowRights', path: '/rights', icon: BookText },
+    { name: 'participate', path: '/participate', icon: PenBox },
+    { name: 'learn', path: '/learn', icon: GraduationCap },
+    { name: 'findLeaders', path: '/find-leaders', icon: Users2 },
 ];
 
 export default function Navbar() {
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
@@ -63,12 +66,13 @@ export default function Navbar() {
                             )}
                         >
                             <link.icon size={18} className="opacity-70" />
-                            {link.name}
+                            {t(link.name)}
                         </NavLink>
                     ))}
-                    <div className="ml-4 pl-4 border-l border-slate-200">
+                    <div className="ml-4 pl-4 border-l border-slate-200 flex items-center gap-3">
+                        <LanguageSwitcher />
                         <button className="btn-primary py-2 px-5 text-sm h-10">
-                            Get Started
+                            {t("getStarted")}
                         </button>
                     </div>
                 </div>
@@ -103,12 +107,16 @@ export default function Navbar() {
                             )}
                         >
                             <link.icon size={20} />
-                            {link.name}
+                            {t(link.name)}
                         </NavLink>
                     ))}
-                    <div className="mt-2 pt-2 border-t border-slate-100">
+                    <div className="mt-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Language</span>
+                        <LanguageSwitcher />
+                    </div>
+                    <div className="mt-4">
                         <button className="w-full btn-primary py-3">
-                            Get Started
+                            {t("getStarted")}
                         </button>
                     </div>
                 </div>

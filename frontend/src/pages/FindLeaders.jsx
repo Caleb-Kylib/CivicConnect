@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { counties, leaders } from '../data/mockData';
+import React, { useState, useMemo, useEffect } from 'react';
+import { counties } from '../data/mockData';
+import { fetchLeaders } from '../utils/api';
 import {
     Search,
     MapPin,
@@ -11,7 +12,8 @@ import {
     Filter,
     CheckCircle2,
     Building2,
-    Users2
+    Users2,
+    Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
@@ -20,20 +22,37 @@ const leaderTypes = ['All', 'Governor', 'Senator', 'Woman Rep', 'MP', 'MCA'];
 
 export default function FindLeaders() {
     const [selectedCounty, setSelectedCounty] = useState('047'); // Default to Nairobi
+    const [leaders, setLeaders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [selectedType, setSelectedType] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        const getLeaders = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchLeaders(selectedCounty);
+                setLeaders(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        getLeaders();
+    }, [selectedCounty]);
 
     const currentCounty = counties.find(c => c.id === selectedCounty);
 
     const filteredLeaders = useMemo(() => {
         return leaders.filter(leader => {
-            const matchCounty = leader.countyId === selectedCounty;
             const matchType = selectedType === 'All' || leader.title === selectedType;
             const matchSearch = leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 leader.constituency.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchCounty && matchType && matchSearch;
+            return matchType && matchSearch;
         });
-    }, [selectedCounty, selectedType, searchQuery]);
+    }, [leaders, selectedType, searchQuery]);
 
     return (
         <div className="min-h-screen bg-slate-50/50 pb-24 pt-12">
@@ -119,7 +138,28 @@ export default function FindLeaders() {
                     </div>
 
                     <AnimatePresence mode="wait">
-                        {filteredLeaders.length > 0 ? (
+                        {loading ? (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="min-h-[40vh] flex flex-col items-center justify-center gap-4 py-20"
+                            >
+                                <Loader2 className="animate-spin text-primary-600" size={48} />
+                                <p className="text-slate-500 font-bold animate-pulse">Fetching leaders for {currentCounty?.name}...</p>
+                            </motion.div>
+                        ) : error ? (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="bg-red-50 rounded-[3rem] p-20 text-center space-y-4 border border-red-100"
+                            >
+                                <Users2 className="text-red-300 mx-auto" size={48} />
+                                <h3 className="text-2xl font-display font-bold text-slate-900">Connection Error</h3>
+                                <p className="text-slate-500 max-w-sm mx-auto">We couldn't connect to the database. Please check your server and try again.</p>
+                                <button onClick={() => window.location.reload()} className="btn-primary mt-4">Retry Connection</button>
+                            </motion.div>
+                        ) : filteredLeaders.length > 0 ? (
                             <motion.div
                                 layout
                                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"

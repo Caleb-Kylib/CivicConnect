@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { bills } from '../data/mockData';
+import { fetchBillById } from '../utils/api';
 import {
     ArrowLeft,
     Calendar,
@@ -12,24 +12,115 @@ import {
     PenBox,
     FileText,
     Share2,
-    Bookmark
+    Bookmark,
+    Loader2,
+    Users2
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { translateText } from '../utils/translate';
 
 export default function BillDetails() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams();
-    const bill = bills.find(b => b.id === id);
+    const [bill, setBill] = useState(null);
+    const [translatedBill, setTranslatedBill] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [translating, setTranslating] = useState(false);
+    const [error, setError] = useState(null);
     const [opinion, setOpinion] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [translationCache, setTranslationCache] = useState({});
 
-    if (!bill) {
+    useEffect(() => {
+        const getBill = async () => {
+            try {
+                const data = await fetchBillById(id);
+                setBill(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        getBill();
+    }, [id]);
+
+    useEffect(() => {
+        const handleTranslation = async () => {
+            if (!bill || i18n.language === 'en') {
+                setTranslatedBill(null);
+                return;
+            }
+
+            const cacheKey = `${id}-${i18n.language}`;
+            if (translationCache[cacheKey]) {
+                setTranslatedBill(translationCache[cacheKey]);
+                return;
+            }
+
+            setTranslating(true);
+            try {
+                const [
+                    translatedTitle,
+                    translatedShortDesc,
+                    translatedFullExpl,
+                    translatedPros,
+                    translatedConcerns,
+                    translatedKeyPoints
+                ] = await Promise.all([
+                    translateText(bill.title, i18n.language),
+                    translateText(bill.shortDescription, i18n.language),
+                    translateText(bill.fullExplanation, i18n.language),
+                    Promise.all(bill.pros.map(p => translateText(p, i18n.language))),
+                    Promise.all(bill.concerns.map(c => translateText(c, i18n.language))),
+                    Promise.all(bill.keyPoints.map(k => translateText(k, i18n.language)))
+                ]);
+
+                const translatedData = {
+                    ...bill,
+                    title: translatedTitle,
+                    shortDescription: translatedShortDesc,
+                    fullExplanation: translatedFullExpl,
+                    pros: translatedPros,
+                    concerns: translatedConcerns,
+                    keyPoints: translatedKeyPoints
+                };
+
+                setTranslationCache(prev => ({ ...prev, [cacheKey]: translatedData }));
+                setTranslatedBill(translatedData);
+            } catch (err) {
+                console.error("Translation failed", err);
+            } finally {
+                setTranslating(false);
+            }
+        };
+
+        handleTranslation();
+    }, [bill, i18n.language, id, translationCache]);
+
+    const displayBill = translatedBill || bill;
+
+    if (loading) {
+        return (
+            <div className="min-h-[80vh] flex flex-col items-center justify-center gap-4">
+                <Loader2 className="animate-spin text-primary-600" size={48} />
+                <p className="text-slate-500 font-bold animate-pulse">{t("analyzingBill")}</p>
+            </div>
+        );
+    }
+
+    if (error || !bill) {
         return (
             <div className="container mx-auto px-4 py-24 text-center space-y-8">
-                <h2 className="text-4xl font-display font-bold text-slate-900">Bill not found</h2>
-                <p className="text-xl text-slate-600">The bill you're looking for doesn't exist in our records.</p>
+                <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto">
+                    <AlertCircle size={40} />
+                </div>
+                <h2 className="text-4xl font-display font-bold text-slate-900">{t("billNotFound")}</h2>
+                <p className="text-xl text-slate-600 font-medium">{error || "The bill you're looking for doesn't exist in our records."}</p>
                 <Link to="/bills" className="btn-primary inline-flex gap-2 mx-auto">
                     <ArrowLeft size={20} />
-                    Back to Bills
+                    {t("backToBills")}
                 </Link>
             </div>
         );
@@ -55,22 +146,54 @@ export default function BillDetails() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 py-12 mb-4 border-b border-slate-100 animate-in fade-in duration-500">
                 <Link to="/bills" className="group flex items-center gap-2 text-slate-600 font-bold hover:text-primary-600 transition-all uppercase tracking-wider text-sm">
                     <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                    Back to list
+                    {t("backToList")}
                 </Link>
 
-                <div className="flex items-center gap-3">
-                    <button className="p-3 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-primary-600 hover:border-primary-200 hover:shadow-md transition-all">
-                        <Share2 size={20} />
-                    </button>
-                    <button className="p-3 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-primary-600 hover:border-primary-200 hover:shadow-md transition-all">
-                        <Bookmark size={20} />
-                    </button>
-                    <button className="btn-primary py-2.5 px-6 text-sm gap-2">
-                        <FileText size={18} />
-                        Download PDF
-                    </button>
+                <div className="flex items-center gap-4">
+                    {translating && (
+                        <div className="flex items-center gap-2 text-primary-600 text-xs font-bold animate-pulse px-3 py-1 bg-primary-50 rounded-lg">
+                            <Loader2 size={12} className="animate-spin" />
+                            Translating...
+                        </div>
+                    )}
+                    <div className="flex items-center gap-3 print:hidden">
+                        <button className="p-3 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-primary-600 hover:border-primary-200 hover:shadow-md transition-all">
+                            <Share2 size={20} />
+                        </button>
+                        <button className="p-3 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-primary-600 hover:border-primary-200 hover:shadow-md transition-all">
+                            <Bookmark size={20} />
+                        </button>
+                        {bill.pdfUrl ? (
+                            <a
+                                href={bill.pdfUrl}
+                                download
+                                className="btn-primary py-2.5 px-6 text-sm gap-2"
+                            >
+                                <FileText size={18} />
+                                Download Gazette PDF
+                            </a>
+                        ) : (
+                            <button
+                                onClick={() => window.print()}
+                                className="btn-primary py-2.5 px-6 text-sm gap-2"
+                            >
+                                <FileText size={18} />
+                                Download PDF Summary
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @media print {
+                    .print\\:hidden { display: none !important; }
+                    body { background: white; }
+                    .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+                    .shadow-premium { box-shadow: none !important; border: 1px solid #e2e8f0 !important; }
+                }
+            `}} />
 
             <div className="grid lg:grid-cols-3 gap-12 mt-12">
                 {/* Main Content */}
@@ -78,25 +201,31 @@ export default function BillDetails() {
                     {/* Header Info */}
                     <div className="space-y-6">
                         <div className="flex flex-wrap items-center gap-4">
-                            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all ${statusColors[bill.status.toLowerCase()] || 'bg-slate-100'}`}>
-                                {bill.status} Status
+                            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all ${statusColors[displayBill.status.toLowerCase()] || 'bg-slate-100'}`}>
+                                {displayBill.status} Status
                             </span>
                             <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold tracking-widest uppercase">
                                 <Tag size={14} />
-                                <span>{bill.category}</span>
+                                <span>{displayBill.category}</span>
                             </div>
+                            {displayBill.sponsor && (
+                                <div className="flex items-center gap-2 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-bold tracking-widest uppercase">
+                                    <Users2 size={14} />
+                                    <span>Sponsor: {displayBill.sponsor}</span>
+                                </div>
+                            )}
                             <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold tracking-widest uppercase">
                                 <Calendar size={14} />
-                                <span>Published: {new Date(bill.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                <span>Published: {new Date(displayBill.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                             </div>
                         </div>
 
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-slate-900 leading-[1.15] tracking-tight">
-                            {bill.title}
+                            {displayBill.title}
                         </h1>
 
                         <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-medium">
-                            {bill.shortDescription}
+                            {displayBill.shortDescription}
                         </p>
                     </div>
 
@@ -110,21 +239,21 @@ export default function BillDetails() {
                             <div className="w-12 h-12 bg-primary-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-primary-200">
                                 <FileText size={24} />
                             </div>
-                            <h2 className="text-3xl font-display font-bold text-slate-800">Simplified Explanation</h2>
+                            <h2 className="text-3xl font-display font-bold text-slate-800">{t("simplifiedExplanation")}</h2>
                         </div>
 
                         <p className="relative z-10 text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
-                            {bill.fullExplanation}
+                            {displayBill.fullExplanation}
                         </p>
 
                         <div className="relative z-10 grid sm:grid-cols-2 gap-8 pt-6">
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3 text-emerald-600 font-bold uppercase tracking-wider text-sm">
                                     <TrendingUp size={20} />
-                                    <span>Pros / Potential Benefits</span>
+                                    <span>{t("pros")}</span>
                                 </div>
                                 <ul className="space-y-4">
-                                    {bill.pros.map((pro, index) => (
+                                    {displayBill.pros.map((pro, index) => (
                                         <li key={index} className="flex gap-3 group">
                                             <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-1 transition-transform group-hover:scale-110" />
                                             <span className="text-slate-700 font-medium leading-relaxed">{pro}</span>
@@ -136,10 +265,10 @@ export default function BillDetails() {
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3 text-amber-600 font-bold uppercase tracking-wider text-sm">
                                     <AlertCircle size={20} />
-                                    <span>Concerns / Criticisms</span>
+                                    <span>{t("concerns")}</span>
                                 </div>
                                 <ul className="space-y-4">
-                                    {bill.concerns.map((concern, index) => (
+                                    {displayBill.concerns.map((concern, index) => (
                                         <li key={index} className="flex gap-3 group">
                                             <div className="w-4 h-4 rounded-full border-2 border-amber-500 mt-1.5 shrink-0 group-hover:bg-amber-500 transition-colors" />
                                             <span className="text-slate-700 font-medium leading-relaxed">{concern}</span>
@@ -154,10 +283,10 @@ export default function BillDetails() {
                     <div className="space-y-8 animate-in slide-in-from-bottom-6 duration-700">
                         <h3 className="text-3xl font-display font-bold text-slate-800 flex items-center gap-3">
                             <CheckCircle2 className="text-primary-600" size={28} />
-                            Key Provisions & Changes
+                            {t("keyProvisions")}
                         </h3>
                         <div className="grid gap-4">
-                            {bill.keyPoints.map((point, index) => (
+                            {displayBill.keyPoints.map((point, index) => (
                                 <div key={index} className="p-6 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-white hover:shadow-premium hover:border-white transition-all duration-300 transform hover:-translate-y-1">
                                     <div className="flex items-start gap-5">
                                         <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold text-sm shrink-0">
@@ -181,7 +310,7 @@ export default function BillDetails() {
 
                         <div className="relative z-10 flex items-center gap-3 mb-2">
                             <PenBox size={24} className="text-indigo-200" />
-                            <h3 className="text-2xl font-display font-bold">Have Your Say</h3>
+                            <h3 className="text-2xl font-display font-bold">{t("haveYourSay")}</h3>
                         </div>
 
                         <p className="relative z-10 text-indigo-100 font-medium leading-relaxed">
@@ -202,7 +331,7 @@ export default function BillDetails() {
                                     className="w-full py-4 bg-white text-indigo-700 font-bold rounded-2xl hover:bg-white/90 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2 group/submit"
                                 >
                                     <MessageSquareShare size={20} className="group-hover/submit:scale-110 transition-transform" />
-                                    Submit Opinion
+                                    {t("submitOpinion")}
                                 </button>
                                 <p className="text-center text-xs text-indigo-200 mt-4 leading-relaxed font-medium">
                                     Your feedback is aggregated and shared with the relevant Parliamentary Committee.
@@ -213,7 +342,7 @@ export default function BillDetails() {
                                 <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-900/40">
                                     <CheckCircle2 size={32} className="text-white" />
                                 </div>
-                                <h4 className="text-2xl font-display font-bold mb-3">Opinion Received!</h4>
+                                <h4 className="text-2xl font-display font-bold mb-3">{t("opinionReceived")}</h4>
                                 <p className="text-indigo-100 font-medium leading-relaxed mb-6">Thank you for participating. Your voice helps strengthen democracy.</p>
                                 <button
                                     onClick={() => setSubmitted(false)}
